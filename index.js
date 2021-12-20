@@ -17,7 +17,7 @@ mongoose.connect('mongodb+srv://joon517:admin@youtubeprac.wt9pe.mongodb.net/myFi
 .catch(err => console.log(err))
 
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.get('/', (req, res) => res.send('Hello World!!'))
 
 
 app.post('/register', (req, res) => {
