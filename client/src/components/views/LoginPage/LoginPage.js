@@ -1,6 +1,11 @@
 import React, {useState} from 'react'
+import {useDispatch} from 'react-redux';
+import {loginUser} from '../../../_actions/user_action';
+import { useNavigate } from "react-router-dom";
 
-function LoginPage() {
+function LoginPage(props) {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -11,6 +16,24 @@ function LoginPage() {
 
     const onPasswordHandler = (event) => {
         setPassword(event.currentTarget.value)
+    }
+
+    const onSubmitHandler = (event) => {
+        event.preventDefault(); //prevent page reflesh?
+
+        let body = {
+            email: Email,
+            password: Password
+        }
+        console.log(body);
+        dispatch(loginUser(body))
+        .then(response => {
+            if (response.payload.loginSuccess) {
+                navigate('/');
+            } else {
+                alert('Error')
+            }
+        })
     }
 
     return (
@@ -28,10 +51,12 @@ function LoginPage() {
                 <label>Password</label>
                 <input type="password" value={Password} onChange={onPasswordHandler} />
                 <br />
-                <button>Login</button>
+                <button type="submit">
+                    Login
+                </button>
             </form>
         </div>
     )
 }
 
-export default LoginPage
+export default LoginPage;
